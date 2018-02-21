@@ -1,0 +1,27 @@
+version: '2.2'
+services:
+  app:
+    build: .
+    expose:
+      - 80
+    ## WARNING: uncomment the following only if you are
+    ## not directly exposing a non-kerberized cluster
+    ## to the Internet
+    # ports:
+    #   - "5555:80"
+    environment:
+      # Because your primary resource-manager is at /rm1
+      # access your main status page at $SERVER_URL_BASE/rm1
+      SERVERS: "resource-manager-active:8088@rm1 
+                resource-manager-passive:8088@rm2 
+                node-manager01:8042@nm01 
+                node-manager02:8042@nm02 
+                node-manager03:8042@nm03 
+                node-manager04:8042@nm04 
+                node-manager05:8042@nm05 
+                node-manager06:8042@nm06 
+                node-manager07:8042@nm07 
+                jobhistory-server:19888@jh"
+      RESOLVER: YOUR_NETWORKS_DNS_SERVER # or 127.0.0.11 for the system resolver
+      SERVER_URL_BASE: http://REVERSE_PROXY_HOSTNAME:5555
+
